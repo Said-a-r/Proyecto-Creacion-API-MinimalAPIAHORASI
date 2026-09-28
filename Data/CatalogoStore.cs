@@ -28,3 +28,4 @@ public class CatalogoStore
     public static int SiguienteIdCarta => Cartas.Count == 0 ? 1 : Cartas.Max(c => c.Id) + 1;
     public static int SiguienteIdEvento => Eventos.Count == 0 ? 1 : Eventos.Max(e => e.Id) + 1;
 }
+
