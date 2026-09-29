@@ -52,5 +52,14 @@ public static class CartasEndpoints
         })
         .WithName("ActualizarCarta")
         .WithTags("Cartas");
+
+
+        
+
+
+
+
+
+
     }
 }

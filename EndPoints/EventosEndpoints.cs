@@ -7,7 +7,6 @@ public static class EventosEndpoints
 {
     public static void MapEventosEndpoints(this WebApplication app)
     {
-
         app.MapGet("/eventos", (EventoService service) =>
         {
             return Results.Ok(service.ObtenerTodos());
@@ -30,11 +29,17 @@ public static class EventosEndpoints
         .WithName("ObtenerEventoPorId")
         .WithTags("Eventos");
 
-
         app.MapPost("/eventos", (Evento evento, EventoService service) =>
         {
-            var nuevo = service.Crear(evento);
-            return Results.Created($"/eventos/{nuevo.Id}", nuevo);
+            try
+            {
+                var nuevo = service.Crear(evento);
+                return Results.Created($"/eventos/{nuevo.Id}", nuevo);
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest(ex.Message);
+            }
         })
         .WithName("CrearEvento")
         .WithTags("Eventos");
@@ -42,16 +47,51 @@ public static class EventosEndpoints
 
         app.MapPut("/eventos/{id:int}", (int id, Evento evento, EventoService service) =>
         {
-            var actualizado = service.Actualizar(id, evento);
+            try
+            {
+                var actualizado = service.Actualizar(id, evento);
 
-            if (actualizado == null)
+                if (actualizado == null)
+                {
+                    return Results.NotFound();
+                }
+
+                return Results.Ok(actualizado);
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest(ex.Message);
+            }
+        })
+        .WithName("ActualizarEvento")
+        .WithTags("Eventos");
+        
+        app.MapGet("/eventos/{id:int}/mvp", (int id, EventoService service) =>
+        {
+            var mvp = service.ObtenerMvp(id);
+
+            if (mvp == null)
             {
                 return Results.NotFound();
             }
 
-            return Results.Ok(actualizado);
+            return Results.Ok(mvp);
         })
-        .WithName("ActualizarEvento")
+        .WithName("ObtenerMvpEvento")
+        .WithTags("Eventos");
+
+        app.MapPost("/eventos/{id:int}/simular", (int id, EventoService service) =>
+        {
+            var resultado = service.SimularBatalla(id);
+
+            if (resultado == null)
+            {
+                return Results.BadRequest("La batalla no se puede simular, se necesita que el eventoe exista o los participantes tengan cartas");
+            }
+
+            return Results.Ok(resultado);
+        })
+        .WithName("SimularBatalla")
         .WithTags("Eventos");
     }
 }

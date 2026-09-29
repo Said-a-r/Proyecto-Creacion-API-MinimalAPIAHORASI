@@ -21,9 +21,10 @@ builder.Services.AddSingleton<PersonajeService>();
 builder.Services.AddSingleton<CartaService>();
 builder.Services.AddSingleton<EventoService>();
 
+builder.Services.AddProblemDetails();
 var app = builder.Build();
 
-
+app.UseExceptionHandler();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

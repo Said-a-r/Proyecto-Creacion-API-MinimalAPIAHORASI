@@ -72,5 +72,36 @@ public static class PersonajesEndpoints
         })
         .WithName("EliminarPersonaje")
         .WithTags("Personajes");
+
+
+        app.MapGet("/personajes/{id:int}/eventos", (int id, EventoService eventoService) =>
+        {
+            var eventos = eventoService.ObtenerEventosDePersonaje(id);
+            return Results.Ok(eventos);
+        })
+        .WithName("ObtenerEventosDePersonaje")
+        .WithTags("Personajes");
+
+        
+        app.MapGet("/personajes/ranking", (PersonajeService service, string? por) =>
+        {
+            List<Personaje> ranking;
+
+            if (por == "poder")
+            {
+                ranking = service.RankingPorPoder();
+            }
+            else
+            {
+                ranking = service.ObtenerTodos();
+            }
+
+            return Results.Ok(ranking);
+        })
+        .WithName("RankingPersonajes")
+        .WithTags("Personajes");
+
+
     }
 }
+
