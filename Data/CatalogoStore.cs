@@ -9,8 +9,6 @@ public class CatalogoStore
         new Personaje { Id = 1, Nombre = "Darth Vader", Especie = "Humano", Faccion = "Imperio", Afiliacion = "Imperio", Estado = "vivo", FuerzaSensitivo = true },
         new Personaje { Id = 2, Nombre = "Luke Skywalker", Especie = "Humano", Faccion = "Rebelde", Afiliacion = "Alianza Rebelde", Estado = "vivo", FuerzaSensitivo = true },
         new Personaje { Id = 3, Nombre = "Han Solo", Especie = "Humano", Faccion = "Rebelde", Afiliacion = "Alianza Rebelde", Estado = "vivo", FuerzaSensitivo = false },
-        new Personaje { Id = 4, Nombre = "Leia Organa", Especie = "Humano", Faccion = "Rebelde", Afiliacion = "Alianza Rebelde", Estado = "vivo", FuerzaSensitivo = true },
-        new Personaje { Id = 5, Nombre = "Emperador Palpatine", Especie = "Humano", Faccion = "Imperio", Afiliacion = "Imperio", Estado = "vivo", FuerzaSensitivo = true }
     };
 
     public static List<CardPersonaje> Cartas { get; } = new()
@@ -18,17 +16,18 @@ public class CatalogoStore
         new CardPersonaje { Id = 1, PersonajeId = 1, Poder = 9000, HabilidadEspecial = "Estrangulamiento", Arma = "Sable de luz", NivelPeligrosidad = "Alto", ImagenUrl = "" },
         new CardPersonaje { Id = 2, PersonajeId = 2, Poder = 8500, HabilidadEspecial = "Telequinesis", Arma = "Sable de luz", NivelPeligrosidad = "Alto", ImagenUrl = "" },
         new CardPersonaje { Id = 3, PersonajeId = 3, Poder = 5000, HabilidadEspecial = "Puntería", Arma = "Bláster", NivelPeligrosidad = "Medio", ImagenUrl = "" },
-        new CardPersonaje { Id = 4, PersonajeId = 4, Poder = 6000, HabilidadEspecial = "Liderazgo", Arma = "Bláster", NivelPeligrosidad = "Medio", ImagenUrl = "" },
-        new CardPersonaje { Id = 5, PersonajeId = 5, Poder = 9500, HabilidadEspecial = "Rayos", Arma = "Sable de luz", NivelPeligrosidad = "Alto", ImagenUrl = "" }
     };
+
+
+
+
 
     public static List<Evento> Eventos { get; } = new()
     {
         new Evento { Id = 1, Nombre = "Batalla de Yavin", Fecha = 0, Ubicacion = "Yavin 4", Descripcion = "Batalla decisiva", Participantes = new() { 1, 2 }, Resultado = null },
-        new Evento { Id = 2, Nombre = "Batalla de Hoth", Fecha = 3, Ubicacion = "Hoth", Descripcion = "Batalla en el hielo", Participantes = new() { 2, 3, 4 }, Resultado = null },
-        new Evento { Id = 3, Nombre = "Duelo en Endor", Fecha = 4, Ubicacion = "Endor", Descripcion = "Duelo final", Participantes = new() { 1, 5 }, Resultado = null },
-        new Evento { Id = 4, Nombre = "Muerte de Palpatine", Fecha = 4, Ubicacion = "Estrella de la Muerte II", Descripcion = "Palpatine muere", Participantes = new() { 2, 5 }, Resultado = "Palpatine muerto" }
+        new Evento { Id = 2, Nombre = "Batalla de Hoth", Fecha = 3, Ubicacion = "Hoth", Descripcion = "Batalla en el hielo", Participantes = new() { 2, 3 }, Resultado = null },
     };
+
 
     public static int SiguienteIdPersonaje => Personajes.Count == 0 ? 1 : Personajes.Max(p => p.Id) + 1;
     public static int SiguienteIdCarta => Cartas.Count == 0 ? 1 : Cartas.Max(c => c.Id) + 1;

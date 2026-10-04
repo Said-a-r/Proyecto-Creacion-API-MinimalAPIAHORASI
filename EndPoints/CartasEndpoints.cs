@@ -5,17 +5,24 @@ namespace proyectoAPICatalogoW.Endpoints;
 
 public static class CartasEndpoints
 {
-    public static void MapCartasEndpoints(this WebApplication app)
+    public static void MapCartasEndpoints(this RouteGroupBuilder api)
     {
 
-        app.MapGet("/cartas", (CartaService service) =>
+
+        var group = api.MapGroup("/cartas")
+            .WithTags("Cartas");
+
+
+
+        group.MapGet("", (CartaService service) =>
         {
             return Results.Ok(service.ObtenerTodos());
         })
         .WithName("ObtenerCartas")
-        .WithTags("Cartas");
+        .WithSummary("Obtiene todas las cartas")
+        .Produces<List<CardPersonaje>>(200);
 
-        app.MapGet("/cartas/{id:int}", (int id, CartaService service) =>
+        group.MapGet("/{id:int}", (int id, CartaService service) =>
         {
             var carta = service.ObtenerPorId(id);
 
@@ -27,19 +34,23 @@ public static class CartasEndpoints
             return Results.Ok(carta);
         })
         .WithName("ObtenerCartaPorId")
-        .WithTags("Cartas");
+        .WithSummary("Obtiene una carta por su ID")
+        .Produces<CardPersonaje>(200)
+        .Produces(404);
 
         
-        app.MapPost("/cartas", (CardPersonaje carta, CartaService service) =>
+        group.MapPost("", (CardPersonaje carta, CartaService service) =>
         {
             var nueva = service.Crear(carta);
             return Results.Created($"/cartas/{nueva.Id}", nueva);
         })
         .WithName("CrearCarta")
-        .WithTags("Cartas");
+        .WithSummary("Crea una nueva carta")
+        .Produces<CardPersonaje>(201)
+        .Produces(400);
 
         
-        app.MapPut("/cartas/{id:int}", (int id, CardPersonaje carta, CartaService service) =>
+        group.MapPut("{id:int}", (int id, CardPersonaje carta, CartaService service) =>
         {
             var actualizada = service.Actualizar(id, carta);
 
@@ -51,8 +62,9 @@ public static class CartasEndpoints
             return Results.Ok(actualizada);
         })
         .WithName("ActualizarCarta")
-        .WithTags("Cartas");
-
+        .WithSummary("Actualiza una carta existente")
+        .Produces<CardPersonaje>(200)
+        .Produces(404);
 
         
 

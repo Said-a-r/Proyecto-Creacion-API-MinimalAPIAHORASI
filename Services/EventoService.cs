@@ -280,7 +280,7 @@ public class EventoService
             else
             {
                 ganador = "Bando B";
-                criterio = "Empate resuelto por aletoriedad;
+                criterio = "Empate resuelto por aletoriedad";
             }
         }
 

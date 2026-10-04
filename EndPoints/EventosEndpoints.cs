@@ -5,17 +5,22 @@ namespace proyectoAPICatalogoW.Endpoints;
 
 public static class EventosEndpoints
 {
-    public static void MapEventosEndpoints(this WebApplication app)
+    public static void MapEventosEndpoints(this RouteGroupBuilder api)
     {
-        app.MapGet("/eventos", (EventoService service) =>
+        var group = api.MapGroup("/eventos")
+            .WithTags("Eventos");
+
+
+        group.MapGet("", (EventoService service) =>
         {
             return Results.Ok(service.ObtenerTodos());
         })
         .WithName("ObtenerEventos")
-        .WithTags("Eventos");
+        .WithSummary("Obtiene todos los eventos")
+        .Produces<List<Evento>>(200);
 
 
-        app.MapGet("/eventos/{id:int}", (int id, EventoService service) =>
+        group.MapGet("/{id:int}", (int id, EventoService service) =>
         {
             var evento = service.ObtenerPorId(id);
 
@@ -27,9 +32,11 @@ public static class EventosEndpoints
             return Results.Ok(evento);
         })
         .WithName("ObtenerEventoPorId")
-        .WithTags("Eventos");
+        .WithSummary("Obtiene un evento por su ID")
+        .Produces<Evento>(200)
+        .Produces(404);
 
-        app.MapPost("/eventos", (Evento evento, EventoService service) =>
+        group.MapPost("", (Evento evento, EventoService service) =>
         {
             try
             {
@@ -42,10 +49,12 @@ public static class EventosEndpoints
             }
         })
         .WithName("CrearEvento")
-        .WithTags("Eventos");
+        .WithSummary("Crea un nuevo evento")
+        .Produces<Evento>(201)
+        .Produces(400);
 
 
-        app.MapPut("/eventos/{id:int}", (int id, Evento evento, EventoService service) =>
+        group.MapPut("/{id:int}", (int id, Evento evento, EventoService service) =>
         {
             try
             {
@@ -64,9 +73,12 @@ public static class EventosEndpoints
             }
         })
         .WithName("ActualizarEvento")
-        .WithTags("Eventos");
-        
-        app.MapGet("/eventos/{id:int}/mvp", (int id, EventoService service) =>
+        .WithSummary("Actualiza un evento existente")
+        .Produces<Evento>(200)
+        .Produces(400)
+        .Produces(404);
+
+        group.MapGet("/{id:int}/mvp", (int id, EventoService service) =>
         {
             var mvp = service.ObtenerMvp(id);
 
@@ -78,9 +90,11 @@ public static class EventosEndpoints
             return Results.Ok(mvp);
         })
         .WithName("ObtenerMvpEvento")
-        .WithTags("Eventos");
+        .WithSummary("Obtiene el MVP de un evento")
+        .Produces<Personaje>(200)
+        .Produces(404);
 
-        app.MapPost("/eventos/{id:int}/simular", (int id, EventoService service) =>
+        group.MapPost("/{id:int}/simular", (int id, EventoService service) =>
         {
             var resultado = service.SimularBatalla(id);
 
@@ -92,6 +106,8 @@ public static class EventosEndpoints
             return Results.Ok(resultado);
         })
         .WithName("SimularBatalla")
-        .WithTags("Eventos");
+        .WithSummary("Simula una batalla entre los participantes de un evento")
+        .Produces(200)
+        .Produces(400);
     }
 }

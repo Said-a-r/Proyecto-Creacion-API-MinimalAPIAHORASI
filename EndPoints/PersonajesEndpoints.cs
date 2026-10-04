@@ -5,19 +5,24 @@ namespace proyectoAPICatalogoW.Endpoints;
 
 public static class PersonajesEndpoints
 {
-    public static void MapPersonajesEndpoints(this WebApplication app)
+    public static void MapPersonajesEndpoints(this RouteGroupBuilder api)
     {
        
-        app.MapGet("/personajes", (PersonajeService service, string? faccion, bool? fuerzaSensitivo) =>
+       var group = api.MapGroup("/personajes")
+            .WithTags("Personajes");
+
+
+        group.MapGet("", (PersonajeService service, string? faccion, bool? fuerzaSensitivo) =>
         {
             var personajes = service.Filtrar(faccion, fuerzaSensitivo);
             return Results.Ok(personajes);
         })
         .WithName("ObtenerPersonajes")
-        .WithTags("Personajes");
+        .WithSummary("Obtiene todos los personajes")
+        .Produces<List<Personaje>>(200);
 
         
-        app.MapGet("/personajes/{id:int}", (int id, PersonajeService service) =>
+        group.MapGet("/{id:int}", (int id, PersonajeService service) =>
         {
             var personaje = service.ObtenerPorId(id);
 
@@ -29,9 +34,11 @@ public static class PersonajesEndpoints
             return Results.Ok(personaje);
         })
         .WithName("ObtenerPersonajePorId")
-        .WithTags("Personajes");
+        .WithSummary("Obtiene un personaje por su ID")
+        .Produces<Personaje>(200)
+        .Produces(404);
 
-        app.MapPost("/personajes", (Personaje personaje, PersonajeService service) =>
+        group.MapPost("", (Personaje personaje, PersonajeService service) =>
         {
             if (string.IsNullOrWhiteSpace(personaje.Nombre))
             {
@@ -42,9 +49,11 @@ public static class PersonajesEndpoints
             return Results.Created($"/personajes/{nuevo.Id}", nuevo);
         })
         .WithName("CrearPersonaje")
-        .WithTags("Personajes");
+        .WithSummary("Crea un nuevo personaje")
+        .Produces<Personaje>(201)
+        .Produces(400);
 
-        app.MapPut("/personajes/{id:int}", (int id, Personaje personaje, PersonajeService service) =>
+        group.MapPut("/{id:int}", (int id, Personaje personaje, PersonajeService service) =>
         {
             var actualizado = service.Actualizar(id, personaje);
 
@@ -56,10 +65,11 @@ public static class PersonajesEndpoints
             return Results.Ok(actualizado);
         })
         .WithName("ActualizarPersonaje")
-        .WithTags("Personajes");
+        .WithSummary("Actualiza un personaje existente")
+        .Produces<Personaje>(200)
+        .Produces(404);
 
-
-        app.MapDelete("/personajes/{id:int}", (int id, PersonajeService service) =>
+        group.MapDelete("/{id:int}", (int id, PersonajeService service) =>
         {
             var eliminado = service.Eliminar(id);
 
@@ -71,37 +81,10 @@ public static class PersonajesEndpoints
             return Results.NoContent();
         })
         .WithName("EliminarPersonaje")
-        .WithTags("Personajes");
-
-
-        app.MapGet("/personajes/{id:int}/eventos", (int id, EventoService eventoService) =>
-        {
-            var eventos = eventoService.ObtenerEventosDePersonaje(id);
-            return Results.Ok(eventos);
-        })
-        .WithName("ObtenerEventosDePersonaje")
-        .WithTags("Personajes");
-
-        
-        app.MapGet("/personajes/ranking", (PersonajeService service, string? por) =>
-        {
-            List<Personaje> ranking;
-
-            if (por == "poder")
-            {
-                ranking = service.RankingPorPoder();
-            }
-            else
-            {
-                ranking = service.ObtenerTodos();
-            }
-
-            return Results.Ok(ranking);
-        })
-        .WithName("RankingPersonajes")
-        .WithTags("Personajes");
+        .WithSummary("Elimina un personaje por su ID")
+        .Produces(204)
+        .Produces(404);
 
 
     }
 }
-
