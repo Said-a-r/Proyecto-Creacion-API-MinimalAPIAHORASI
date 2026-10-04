@@ -85,6 +85,31 @@ public static class PersonajesEndpoints
         .Produces(204)
         .Produces(404);
 
+        group.MapGet("/{id:int}/eventos", (int id, EventoService eventoService) =>
+        {
+            var eventos = eventoService.ObtenerEventosDePersonaje(id);
+            return Results.Ok(eventos);
+            })
+            .WithName("ObtenerEventosDePersonaje")
+            .WithSummary("Obtiene los eventos de un personaje")
+            .Produces<List<Evento>>(200);
+            
+        group.MapGet("/ranking", (PersonajeService service, string? por) =>
+        {
+            List<Personaje> ranking;
+            if (por == "poder")
+            {
+                ranking = service.RankingPorPoder();
+            }else
+            {
+                ranking = service.ObtenerTodos();
+            }
+            return Results.Ok(ranking);
+            })
+            .WithName("RankingPersonajes")
+            .WithSummary("Obtiene el ranking de personajes")
+            .Produces<List<Personaje>>(200);
+
 
     }
 }
