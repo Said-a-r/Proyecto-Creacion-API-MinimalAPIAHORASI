@@ -10,3 +10,4 @@ public class CardPersonaje
     public string NivelPeligrosidad { get; set; } = string.Empty;
     public string ImagenUrl { get; set; } = string.Empty;
 }
+

@@ -9,4 +9,7 @@ public class Personaje
     public string Afiliacion { get; set; } = string.Empty;
     public string Estado { get; set; } = "vivo";
     public bool FuerzaSensitivo { get; set; }
+
+
+    
 }

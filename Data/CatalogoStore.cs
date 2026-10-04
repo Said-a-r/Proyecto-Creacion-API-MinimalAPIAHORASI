@@ -18,14 +18,18 @@ public class CatalogoStore
         new CardPersonaje { Id = 3, PersonajeId = 3, Poder = 5000, HabilidadEspecial = "Puntería", Arma = "Bláster", NivelPeligrosidad = "Medio", ImagenUrl = "" },
     };
 
+
+
+
+
     public static List<Evento> Eventos { get; } = new()
     {
         new Evento { Id = 1, Nombre = "Batalla de Yavin", Fecha = 0, Ubicacion = "Yavin 4", Descripcion = "Batalla decisiva", Participantes = new() { 1, 2 }, Resultado = null },
         new Evento { Id = 2, Nombre = "Batalla de Hoth", Fecha = 3, Ubicacion = "Hoth", Descripcion = "Batalla en el hielo", Participantes = new() { 2, 3 }, Resultado = null },
     };
 
+
     public static int SiguienteIdPersonaje => Personajes.Count == 0 ? 1 : Personajes.Max(p => p.Id) + 1;
     public static int SiguienteIdCarta => Cartas.Count == 0 ? 1 : Cartas.Max(c => c.Id) + 1;
     public static int SiguienteIdEvento => Eventos.Count == 0 ? 1 : Eventos.Max(e => e.Id) + 1;
 }
-
