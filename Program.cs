@@ -3,6 +3,17 @@ using proyectoAPICatalogoW.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+        policy.WithOrigins("http://localhost:5173") 
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials()); 
+});
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -22,6 +33,8 @@ builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 
+app.UseCors();
+
 app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
@@ -30,7 +43,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-var api = app.MapGroup("/api");
+var api = app.MapGroup("");
 
 api.MapPersonajesEndpoints();
 api.MapCartasEndpoints();
