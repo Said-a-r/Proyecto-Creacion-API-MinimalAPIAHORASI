@@ -17,8 +17,6 @@ public class CartaService
 
         return resultado;
     }
-
-
     public CardPersonaje? ObtenerPorId(int id)
     {
         foreach (CardPersonaje c in CatalogoStore.Cartas)

@@ -15,7 +15,7 @@ public class CatalogoStore
 
     public static List<CardPersonaje> Cartas { get; } = new()
     {
-        new CardPersonaje { Id = 1, PersonajeId = 1, Poder = 9000, HabilidadEspecial = "Estrangulamiento", Arma = "Sable de luz", NivelPeligrosidad = "Alto", ImagenUrl = "" },
+        new CardPersonaje { Id = 1, PersonajeId = 1, Poder = 9000, HabilidadEspecial = "Estrangulamiento", Arma = "Sable de luz", NivelPeligrosidad = "Alto", ImagenUrl = "https://www.shutterstock.com/image-photo/dart-vader-dark-light-saber-260nw-2598175847.jpg" },
         new CardPersonaje { Id = 2, PersonajeId = 2, Poder = 8500, HabilidadEspecial = "Telequinesis", Arma = "Sable de luz", NivelPeligrosidad = "Alto", ImagenUrl = "" },
         new CardPersonaje { Id = 3, PersonajeId = 3, Poder = 5000, HabilidadEspecial = "Puntería", Arma = "Bláster", NivelPeligrosidad = "Medio", ImagenUrl = "" },
         new CardPersonaje { Id = 4, PersonajeId = 4, Poder = 6000, HabilidadEspecial = "Liderazgo", Arma = "Bláster", NivelPeligrosidad = "Medio", ImagenUrl = "" },

@@ -12,14 +12,24 @@ public static class PersonajesEndpoints
             .WithTags("Personajes");
 
 
-        group.MapGet("", (PersonajeService service, string? faccion, bool? fuerzaSensitivo) =>
+        group.MapGet("", (PersonajeService service) =>
         {
-            var personajes = service.Filtrar(faccion, fuerzaSensitivo);
+            var personajes = service.ObtenerTodos();
             return Results.Ok(personajes);
         })
-        .WithName("ObtenerPersonajes")
+        .WithName("ObtenerPersonajesSinFiltro")
         .WithSummary("Obtiene todos los personajes")
         .Produces<List<Personaje>>(200);
+        
+        // group.MapGet("", (PersonajeService service, string? faccion, bool? fuerzaSensitivo) =>
+        // {
+        //     var personajes = service.Filtrar(faccion, fuerzaSensitivo);
+        //     return Results.Ok(personajes);
+        // })
+        // .WithName("ObtenerPersonajes")
+        // .WithSummary("Obtiene todos los personajes")
+        // .Produces<List<Personaje>>(200);
+
 
         
         group.MapGet("/{id:int}", (int id, PersonajeService service) =>
@@ -93,6 +103,36 @@ public static class PersonajesEndpoints
             .WithName("ObtenerEventosDePersonaje")
             .WithSummary("Obtiene los eventos de un personaje")
             .Produces<List<Evento>>(200);
+        
+
+        // group.MapGet("/{id:int}/con-card", (int id, CartaService cartaService) =>
+        // { 
+        //     var carta = cartaService.ObtenerPorPersonajeId(id);
+        //     if (carta == null)
+        //     {
+        //         return Results.NotFound();
+        //     }
+        //     return Results.Ok(carta);
+        //     })
+        //     .WithName("ObtenerCartasDePersonaje")
+        //     .WithSummary("Obtiene la carta asociada a un ID de personaje")
+        //     .Produces<CardPersonaje>(200)
+        //     .Produces(404);
+
+        group.MapGet("/{id:int}/con-card", (int id, PersonajeService personajeService) =>
+        { 
+            var personaje = personajeService.ObtenerPorId(id);
+            if (personaje == null)
+            {
+                return Results.NotFound();
+            }
+            return Results.Ok(personaje);
+            })
+            .WithName("ObtenerDatosDePersonaje")
+            .WithSummary("Obtiene datos asociada a un ID de personaje")
+            .Produces<Personaje>(200)
+            .Produces(404);
+
             
         group.MapGet("/ranking", (PersonajeService service, string? por) =>
         {
