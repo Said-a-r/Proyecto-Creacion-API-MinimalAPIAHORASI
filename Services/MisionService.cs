@@ -48,4 +48,4 @@ public class MisionService : IMisionService
             throw new InvalidOperationException($"miison fallida, tu poder total {poderTotal}, no alcanzo para {mision.PoderRequerido}");
         }
     }
-}        int poderTotal = jugador.Cartas.Sum(c => c.Poder);
+}        
