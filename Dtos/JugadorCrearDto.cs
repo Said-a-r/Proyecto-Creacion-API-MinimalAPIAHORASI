@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations; 
 using proyectoAPICatalogoW.Models;
 
 namespace proyectoAPICatalogoW.Dtos;

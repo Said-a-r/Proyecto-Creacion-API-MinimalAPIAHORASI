@@ -18,6 +18,7 @@ public class PersonajeService
         return resultado;
     }
 
+
     public Personaje? ObtenerPorId(int id)
     {
         foreach (Personaje p in CatalogoStore.Personajes)
@@ -152,5 +153,6 @@ public class PersonajeService
             .ToList();
     }
 }
+
 
 
