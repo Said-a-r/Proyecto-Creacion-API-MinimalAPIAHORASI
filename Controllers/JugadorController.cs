@@ -40,3 +40,10 @@ public class JugadoresController : ControllerBase
         return Ok(jugador);
     }
 }
+
+///Hacer cambios en los services y en el dtp para manejar elementos "activos dntor de la base de datos, esto para no eliminarlo"
+/// Esto obviamente tambien predecera un enpoint eliminar 
+/// Hace otra migracion con dotnet ef migration add SegundaMigracio [por ejemplo]
+/// Aniadir migraciones ?????????? 
+/// Volver a reempalzar toda la data del proyecto pero con una estructura completa
+/// 
