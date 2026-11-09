@@ -1,0 +1,15 @@
+# USO_DE_IA.md
+
+## Herramienta 
+DeepSeek
+
+## En que se utilizo exactamente
+
+Se solicito ayuda principalmente en tres areas
+1. Correccion de errores, resolucion de problemas de compatibilidad entre versiones de .NET (v10), Entity Framework Core y el paquete Pomelo para MySQL, ademas de solucionar conflictos con los namespaces al migrar a la arquitectura de controladores y algunos errores de typeo y logica.
+2. Adaptacion de cifrados, asistencia para entender como aplicar el hash de contrasenas (BCrypt) y el cifrado de campos sensibles (AES) a la entidad jugador.
+3. Llenado del DbContext, apoyo general en el llenado de datos que ya vienen del sistema tanto para misiones como para cartas
+
+Se corrigio logica de negocio en un area
+1. Codigo limpio, la ia queria mejorar ciertos campos de codigo haciendolos o mas cortos o diferentes a la idea original
+
