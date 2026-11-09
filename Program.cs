@@ -33,6 +33,7 @@ builder.Services.AddSingleton<PersonajeService>();
 builder.Services.AddSingleton<CartaService>();
 builder.Services.AddSingleton<EventoService>();
 
+builder.Services.AddSingleton<ICifradoService, CifradoService>();
 builder.Services.AddScoped<IJugadorService, JugadorService>();
 builder.Services.AddScoped<IMisionService, MisionService>();
 

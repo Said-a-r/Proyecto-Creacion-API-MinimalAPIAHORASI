@@ -1,4 +1,4 @@
-namespace BackofficeApi.Models;
+namespace proyectoAPICatalogoW.Models;
 
 public class Mision
 {
