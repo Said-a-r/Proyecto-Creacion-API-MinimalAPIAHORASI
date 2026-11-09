@@ -1,4 +1,4 @@
-# Catálogo Galáctico API
+# Catálogo Galactico API
 
 ## Contexto del Programa
 
