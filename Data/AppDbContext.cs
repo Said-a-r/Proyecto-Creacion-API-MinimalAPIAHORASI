@@ -8,6 +8,7 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
+    
     public DbSet<Jugador> Jugadores => Set<Jugador>();
     public DbSet<Mision> Misiones => Set<Mision>();
     public DbSet<CardPersonaje> Cartas => Set<CardPersonaje>();
@@ -17,10 +18,12 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<Jugador>(e =>
         {
             e.Property(j => j.Nombre).IsRequired().HasMaxLength(100);
-            e.Property(j => j.Puntaje).HasDefaultValue(0); 
+            e.Property(j => j.PuntajeCifrado).IsRequired(); 
+            e.Property(j => j.PasswordHash).IsRequired();
         });
 
         modelBuilder.Entity<Mision>(e =>
@@ -29,8 +32,8 @@ public class AppDbContext : DbContext
         });
         
         modelBuilder.Entity<Mision>().HasData(
-            new Mision { Id = 1, Nombre = "Prueba Fácil", PoderRequerido = 10000, PuntosRecompensa = 50 },
-            new Mision { Id = 2, Nombre = "Prueba Difícil", PoderRequerido = 20000, PuntosRecompensa = 200 }
+            new Mision { Id = 1, Nombre = "Facil", PoderRequerido = 10000, PuntosRecompensa = 50 },
+            new Mision { Id = 2, Nombre = "Dificil", PoderRequerido = 20000, PuntosRecompensa = 200 }
         );
 
         modelBuilder.Entity<Personaje>(e =>
@@ -67,5 +70,26 @@ public class AppDbContext : DbContext
                 .HasForeignKey(c => c.PersonajeId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
+
+        modelBuilder.Entity<Personaje>().HasData(
+            new Personaje { Id = 1, Nombre = "Darth Vader", Especie = "Humano", Faccion = "Imperio", Afiliacion = "Imperio", Estado = "vivo" },
+            new Personaje { Id = 2, Nombre = "Luke Skywalker", Especie = "Humano", Faccion = "Rebelde", Afiliacion = "Alianza Rebelde", Estado = "vivo" },
+            new Personaje { Id = 3, Nombre = "Han Solo", Especie = "Humano", Faccion = "Rebelde", Afiliacion = "Alianza Rebelde", Estado = "vivo" },
+            new Personaje { Id = 4, Nombre = "Yoda", Especie = "Desconocida", Faccion = "Rebelde", Afiliacion = "Orden Jedi", Estado = "vivo" },
+            new Personaje { Id = 5, Nombre = "Emperador Palpatine", Especie = "Humano", Faccion = "Imperio", Afiliacion = "Imperio", Estado = "vivo" }
+        );
+
+        modelBuilder.Entity<CardPersonaje>().HasData(
+            new CardPersonaje { Id = 1, PersonajeId = 1, Poder = 9000, HabilidadEspecial = "Estrangulamiento", Arma = "Sable de luz", NivelPeligrosidad = "Alto", ImagenUrl = "" },
+            new CardPersonaje { Id = 2, PersonajeId = 2, Poder = 8500, HabilidadEspecial = "Telequinesis", Arma = "Sable de luz", NivelPeligrosidad = "Alto", ImagenUrl = "" },
+            new CardPersonaje { Id = 3, PersonajeId = 3, Poder = 5000, HabilidadEspecial = "Puntería", Arma = "Bláster", NivelPeligrosidad = "Medio", ImagenUrl = "" },
+            new CardPersonaje { Id = 4, PersonajeId = 4, Poder = 9500, HabilidadEspecial = "Fuerza Maestra", Arma = "Sable de luz", NivelPeligrosidad = "Alto", ImagenUrl = "" },
+            new CardPersonaje { Id = 5, PersonajeId = 5, Poder = 9800, HabilidadEspecial = "Rayos", Arma = "Sable de luz", NivelPeligrosidad = "Alto", ImagenUrl = "" },
+            new CardPersonaje { Id = 6, PersonajeId = 1, Poder = 8000, HabilidadEspecial = "Fuerza Oscura", Arma = "Sable de luz", NivelPeligrosidad = "Medio", ImagenUrl = "" },
+            new CardPersonaje { Id = 7, PersonajeId = 2, Poder = 7800, HabilidadEspecial = "Maestría Jedi", Arma = "Sable de luz", NivelPeligrosidad = "Medio", ImagenUrl = "" },
+            new CardPersonaje { Id = 8, PersonajeId = 3, Poder = 4500, HabilidadEspecial = "Disparo Rápido", Arma = "Bláster", NivelPeligrosidad = "Bajo", ImagenUrl = "" },
+            new CardPersonaje { Id = 9, PersonajeId = 4, Poder = 9200, HabilidadEspecial = "Salto Alto", Arma = "Sable de luz", NivelPeligrosidad = "Alto", ImagenUrl = "" },
+            new CardPersonaje { Id = 10, PersonajeId = 5, Poder = 8900, HabilidadEspecial = "Manipulación", Arma = "Sable de luz", NivelPeligrosidad = "Medio", ImagenUrl = "" }
+        );
     }
 }
